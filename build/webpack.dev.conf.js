@@ -77,6 +77,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 from: path.resolve(__dirname, '../static'),
                 to: config.dev.assetsSubDirectory,
                 ignore: ['.*']
+            },
+            // build过后，增加页签小图标
+            {
+                from: './src/assets/img/favicon.ico',
+                to: config.build.assetsRoot
             }
         ])
     ]
