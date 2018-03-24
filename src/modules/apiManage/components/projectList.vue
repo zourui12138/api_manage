@@ -102,7 +102,7 @@
             },
             toApiList(row) {
                 console.log(row);
-                this.$router.push({ path: '/apiManage/apiList/12138' })
+                this.$router.push({ path: '/apiManage/apiList' });
             }
         }
     }

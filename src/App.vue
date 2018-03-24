@@ -61,6 +61,30 @@
                             }
                         ];
                         break;
+                    case 'apiDetail' :
+                        arr = [
+                            {
+                                id: '1',
+                                name: '接口管理',
+                                path: ''
+                            },
+                            {
+                                id: '2',
+                                name: '项目列表',
+                                path: ''
+                            },
+                            {
+                                id: '3',
+                                name: 'Api列表',
+                                path: ''
+                            },
+                            {
+                                id: '4',
+                                name: 'Api详情',
+                                path: ''
+                            }
+                        ];
+                        break;
                     case 'addApi' :
                         arr = [
                             {

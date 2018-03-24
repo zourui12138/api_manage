@@ -1,28 +1,14 @@
 <template>
     <div id="apiList" class="clear">
-        <div class="apiGroup fl">
-            <header class="system"><el-button type="primary" size="small" icon="el-icon-plus">新建分组</el-button></header>
-            <section class="content">
-                <h1 class="contentTitle">分组</h1>
-                <VuePerfectScrollbar class="contentList">
-                    <el-tree ref="tree" :data="groupData" node-key="id" highlight-current @node-click="getCurrentNode">
-                        <div slot-scope="{ node, data }">
-                            <i v-if="data.id === '1'" class="el-icon-menu"></i>
-                            <i v-if="data.id === '2'" class="el-icon-delete"></i>
-                            <span>{{ node.label }}</span>
-                        </div>
-                    </el-tree>
-                </VuePerfectScrollbar>
-            </section>
-        </div>
+        <GroupList class="fl" :groupData="groupData"/>
         <div class="apiList fl">
             <header class="system clear">
-                <el-button type="primary" size="small" icon="el-icon-plus" @click="addApi">添加接口</el-button>
+                <el-button type="primary" size="small" icon="el-icon-plus" @click="toAddApi">添加接口</el-button>
                 <el-input class="search" placeholder="请输入接口名称或更新人" prefix-icon="el-icon-search" size="small" clearable></el-input>
                 <span class="count fr">共{{apiData.length}}个接口</span>
             </header>
             <VuePerfectScrollbar class="content">
-                <el-table :data="apiData" node-key="id" stripe style="width: 100%">
+                <el-table :data="apiData" @row-click="toApiDetail" node-key="id" stripe style="width: 100%">
                     <el-table-column label="接口名称">
                         <template slot-scope="scope">
                             <i class="apiStatus" :class="[scope.row.status === '1' && 'enable',scope.row.status === '2' && 'disable',scope.row.status === '3' && 'maintain']"></i>
@@ -40,8 +26,8 @@
                     <el-table-column prop="time" label="更新时间" width="170"></el-table-column>
                     <el-table-column label="操作" width="200">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" icon="el-icon-edit-outline" @click="setApi(scope)">修改</el-button>
-                            <el-button type="text" size="small" icon="el-icon-delete" @click="deleteFun">删除</el-button>
+                            <el-button type="text" size="small" icon="el-icon-edit-outline" @click.stop="toSetApi(scope)">修改</el-button>
+                            <el-button type="text" size="small" icon="el-icon-delete" @click.stop="deleteFun">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -52,10 +38,11 @@
 
 <script>
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+    import GroupList from '~/components/groupList'
 
     export default {
         name: "api-list",
-        components: {VuePerfectScrollbar},
+        components: {VuePerfectScrollbar, GroupList},
         data() {
             return{
                 apiData: [
@@ -188,42 +175,20 @@
                     this.$message({type: 'info', message: '已取消删除'});
                 });
             },
-            getCurrentNode() {},
-            addApi() {
-                this.$router.push({ path: '/apiManage/addApi/'+this.$route.params.projectId });
+            toAddApi() {
+                this.$router.push({path: '/apiManage/addApi'});
             },
-            setApi(row) {
+            toSetApi(row) {
                 console.log(row);
-                this.$router.push({ path: '/apiManage/setApi/'+this.$route.params.projectId+'/987654' });
+                this.$router.push({path: '/apiManage/setApi'});
+            },
+            toApiDetail(row) {
+                console.log(row);
+                this.$router.push({path: '/apiManage/apiDetail'});
             }
-        },
-        mounted() {
-            // 默认选中所有分组
-            this.$refs.tree.setCurrentKey('1');
-        },
-        beforeMount() {
-            console.log(this.$route.params);
         }
     }
 </script>
-
-<style lang="scss">
-    .el-tree-node__content{
-        height: 50px;
-        line-height: 50px;
-        font-size: 14px;
-    }
-    .el-tree-node__content:hover {
-        background-color: #e3f1e5;
-    }
-    .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
-        background-color: #E0F7E0;
-        color: #4caf50;
-    }
-    .el-tree > .el-tree-node:nth-child(2){
-        border-bottom: 1px dashed #e5e5e5;
-    }
-</style>
 
 <style lang="scss" scoped>
     #apiList{
@@ -236,7 +201,6 @@
                 height: calc(100% - 56px);
                 background-color: #fff;
                 border: 1px solid #e5e5e5;
-                border-right: none;
                 position: relative;
                 .contentTitle{
                     height: 47px;
@@ -257,6 +221,7 @@
                 height: calc(100% - 56px);
                 background-color: #fff;
                 border: 1px solid #e5e5e5;
+                border-left: none;
                 .apiStatus{
                     display: inline-block;
                     width: 13px;

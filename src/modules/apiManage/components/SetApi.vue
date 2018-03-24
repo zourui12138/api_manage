@@ -2,9 +2,9 @@
     <div id="setApiContainer">
         <VuePerfectScrollbar id="setApi">
             <header class="system clear">
-                <el-button size="small" icon="el-icon-arrow-left" @click="backApiList">返回详情</el-button>
+                <el-button size="small" icon="el-icon-arrow-left" @click="backApiList">返回列表</el-button>
                 <div class="fr">
-                    <el-button type="primary" size="small" @click="saveApiWarn">继续添加</el-button>
+                    <el-button type="primary" size="small" @click="deleteFun" icon="el-icon-delete">删除</el-button>
                     <el-button type="primary" size="small" @click="saveApiWarn">保存</el-button>
                 </div>
             </header>
@@ -50,10 +50,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="contentBox">
+                <div class="apiBox">
                     <h1>请求头部</h1>
                     <h2><el-button size="small" type="primary" plain>导入JSON</el-button><el-button size="small" type="primary" plain @click="openAddHeader">添加请求头部</el-button></h2>
-                    <el-table :data="requestData.header" border style="width: 100%">
+                    <el-table :data="headerData" border :header-cell-style="{backgroundColor:'#FAFAFA'}" style="width: 100%">
                         <el-table-column prop="label" label="标签" width="230"></el-table-column>
                         <el-table-column prop="content" label="内容"></el-table-column>
                         <el-table-column label="操作" width="200">
@@ -63,10 +63,10 @@
                         </el-table-column>
                     </el-table>
                 </div>
-                <div class="contentBox">
+                <div class="apiBox">
                     <h1>请求参数</h1>
                     <h2><el-button size="small" type="primary" plain>导入JSON</el-button><el-button size="small" type="primary" plain>导入GET参数</el-button><el-button size="small" type="primary" plain @click="openAddRequest">添加请求参数</el-button></h2>
-                    <el-table :data="requestData.argument" border style="width: 100%">
+                    <el-table :data="requestData" border :header-cell-style="{backgroundColor:'#FAFAFA'}" style="width: 100%">
                         <el-table-column prop="name" label="字段名"></el-table-column>
                         <el-table-column prop="type" label="字段类型" width="230"></el-table-column>
                         <el-table-column prop="comment" label="字段说明"></el-table-column>
@@ -77,10 +77,10 @@
                         </el-table-column>
                     </el-table>
                 </div>
-                <div class="contentBox">
+                <div class="apiBox">
                     <h1>返回参数</h1>
                     <h2><el-button size="small" type="primary" plain>导入JSON</el-button><el-button size="small" type="primary" plain @click="openAddResponse">添加返回参数</el-button></h2>
-                    <el-table :data="responseData" border style="width: 100%">
+                    <el-table :data="responseData" border :header-cell-style="{backgroundColor:'#FAFAFA'}"  style="width: 100%">
                         <el-table-column prop="name" label="字段名"></el-table-column>
                         <el-table-column prop="type" label="字段类型" width="230"></el-table-column>
                         <el-table-column prop="comment" label="字段说明"></el-table-column>
@@ -271,6 +271,19 @@
                     type: null,
                     name: null
                 },
+                headerData: [
+                    {
+                        label: 'Content-Type',
+                        content: '我是请求头部内容'
+                    }
+                ],
+                requestData: [
+                    {
+                        name: 'uuid',
+                        type: 'String',
+                        comment: '该条数据的uuid'
+                    }
+                ],
                 responseData: [
                     {
                         name: 'status',
@@ -278,21 +291,6 @@
                         comment: '1：表示启用，2表示禁用，3表示维护'
                     }
                 ],
-                requestData: {
-                    header: [
-                        {
-                            label: 'Content-Type',
-                            content: '我是请求头部内容'
-                        }
-                    ],
-                    argument: [
-                        {
-                            name: 'uuid',
-                            type: 'String',
-                            comment: '该条数据的uuid'
-                        }
-                    ]
-                },
                 headerDialog: false,
                 addHeaderData: {
                     label: null,
@@ -340,14 +338,13 @@
                     type: 'error',
                     showCancelButton: false,
                     showConfirmButton: false
+                }).catch(() => {
+                    this.$message({type: 'warning', message: '请继续编辑'});
                 });
             },
             backApiList() {
-                this.$router.push({ path: '/apiManage/apiList/'+this.$route.params.projectId });
+                this.$router.push({path: '/apiManage/apiList'});
             }
-        },
-        beforeMount() {
-            console.log(this.$route.params);
         }
     }
 </script>
@@ -380,26 +377,6 @@
                     }
                     .basicUrl{
                         width: calc(100% - 160px);
-                    }
-                }
-                .contentBox{
-                    margin-top: 10px;
-                    background-color: #fff;
-                    h1{
-                        height: 40px;
-                        line-height: 40px;
-                        font-size: 14px;
-                        font-weight: 500;
-                        border: 1px solid #e5e5e5;
-                        padding-left: 10px;
-                    }
-                    h2{
-                        height: 50px;
-                        line-height: 50px;
-                        padding-left: 10px;
-                        border: 1px solid #e5e5e5;
-                        border-top: none;
-                        border-bottom: none;
                     }
                 }
             }

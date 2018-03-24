@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import ApiManage from '~/modules/apiManage/apiManage'
 import ProjectList from '~/modules/apiManage/components/projectList'
 import ApiList from '~/modules/apiManage/components/apiList'
+import ApiDetail from '~/modules/apiManage/components/apiDetail'
 import AddApi from '~/modules/apiManage/components/addApi'
 import SetApi from '~/modules/apiManage/components/SetApi'
 
@@ -27,17 +28,22 @@ export default new Router({
                     component: ProjectList
                 },
                 {
-                    path: '/apiManage/apiList/:projectId',
+                    path: '/apiManage/apiList',
                     name: 'apiList',
                     component: ApiList
                 },
                 {
-                    path: '/apiManage/addApi/:projectId',
+                    path: '/apiManage/apiDetail',
+                    name: 'apiDetail',
+                    component: ApiDetail
+                },
+                {
+                    path: '/apiManage/addApi',
                     name: 'addApi',
                     component: AddApi
                 },
                 {
-                    path: '/apiManage/setApi/:projectId/:apiId',
+                    path: '/apiManage/setApi',
                     name: 'setApi',
                     component: SetApi
                 }

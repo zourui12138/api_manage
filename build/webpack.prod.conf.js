@@ -90,7 +90,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             // 注入依赖的时候按照依赖先后顺序进行注入，比如，需要先注入vendor.js，再注入app.js
             chunksSortMode: 'dependency'
         }),
-        // keep module.id stable when vendor modules does not change
+        // keep module.id stable when vendor components does not change
         new webpack.HashedModuleIdsPlugin(),
         // enable scope hoisting
         new webpack.optimize.ModuleConcatenationPlugin(),
@@ -99,7 +99,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks(module) {
-                // any required modules inside node_modules are extracted to vendor
+                // any required components inside node_modules are extracted to vendor
                 return (
                     module.resource &&
                     /\.js$/.test(module.resource) &&
