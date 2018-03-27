@@ -186,6 +186,9 @@
                 console.log(row);
                 this.$router.push({path: '/apiManage/apiDetail'});
             }
+        },
+        beforeMount() {
+            console.log(this.$route.query.uuid);
         }
     }
 </script>

@@ -1,13 +1,23 @@
 <template>
-    <VuePerfectScrollbar id="projectList">
+    <VuePerfectScrollbar id="projectManage">
         <header class="system">
             <el-button type="primary" size="small" icon="el-icon-plus">新增项目</el-button>
             <el-input class="search" placeholder="请输入项目名称" prefix-icon="el-icon-search" size="small" clearable></el-input>
             <span class="count fr">共{{projectData.length}}个项目</span>
         </header>
         <section class="content">
-            <el-table :data="projectData" style="width: 100%" @row-click="toApiList">
+            <el-table :data="projectData" stripe style="width: 100%">
                 <el-table-column prop="name" label="项目名称"></el-table-column>
+                <el-table-column label="文档管理">
+                    <template slot-scope="scope">
+                        <span class="underline" @click="toDocumentManage(scope)">查看相关文档</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="接口管理">
+                    <template slot-scope="scope">
+                        <span class="underline" @click="toApiManage(scope)">查看相关接口</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="version" label="版本号" width="90"></el-table-column>
                 <el-table-column prop="type" label="类型" width="90"></el-table-column>
                 <el-table-column prop="time" label="最后修改时间" width="170"></el-table-column>
@@ -26,7 +36,7 @@
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
     export default {
-        name: "project-list",
+        name: "project-manage",
         components: {VuePerfectScrollbar},
         data() {
             return{
@@ -100,16 +110,20 @@
                     this.$message({type: 'info', message: '已取消删除'});
                 });
             },
-            toApiList(row) {
+            toApiManage(row) {
                 console.log(row);
-                this.$router.push({ path: '/apiManage/apiList' });
+                this.$router.push({ path: '/apiManage/apiList', query: { uuid: '12138' } });
+            },
+            toDocumentManage(row) {
+                console.log(row);
+                this.$router.push({ path: '/documentManage', query: { uuid: '12138' } });
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    #projectList{
+    #projectManage{
         height: calc(100% - 20px);
         padding: 0 20px 20px;
         .content{

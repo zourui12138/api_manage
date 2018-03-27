@@ -10,10 +10,9 @@
         </header>
         <section class="section">
             <aside class="aside">
-                <el-menu default-active="1">
-                    <el-menu-item index="1"><i class="el-icon-edit-outline"></i><span slot="title">接口管理</span></el-menu-item>
-                    <el-menu-item index="2"><i class="el-icon-menu"></i><span slot="title">数据库管理</span></el-menu-item>
-                    <el-menu-item index="3"><i class="el-icon-menu"></i><span slot="title">文档管理</span></el-menu-item>
+                <el-menu router :default-active="asideNav">
+                    <el-menu-item index="/projectManage"><i class="el-icon-edit-outline"></i><span slot="title">接口管理</span></el-menu-item>
+                    <el-menu-item index="/platformManage"><i class="el-icon-menu"></i><span slot="title">平台与应用管理</span></el-menu-item>
                 </el-menu>
             </aside>
             <div class="main"><router-view/></div>
@@ -24,6 +23,11 @@
 <script>
     export default {
         name: 'App',
+        data() {
+            return{
+                asideNav: null
+            }
+        },
         computed: {
             breadcrumbList() {
                 let arr;
@@ -33,11 +37,6 @@
                             {
                                 id: '1',
                                 name: '接口管理',
-                                path: ''
-                            },
-                            {
-                                id: '2',
-                                name: '项目列表',
                                 path: ''
                             }
                         ];
@@ -51,11 +50,6 @@
                             },
                             {
                                 id: '2',
-                                name: '项目列表',
-                                path: ''
-                            },
-                            {
-                                id: '3',
                                 name: 'Api列表',
                                 path: ''
                             }
@@ -70,16 +64,11 @@
                             },
                             {
                                 id: '2',
-                                name: '项目列表',
-                                path: ''
-                            },
-                            {
-                                id: '3',
                                 name: 'Api列表',
                                 path: ''
                             },
                             {
-                                id: '4',
+                                id: '3',
                                 name: 'Api详情',
                                 path: ''
                             }
@@ -136,6 +125,11 @@
                 }
                 return arr;
             }
+        },
+        methods: {},
+        beforeMount() {
+            this.asideNav =
+                this.$route.name === 'platformManage' ? '/platformManage' : '/projectManage';
         }
     }
 </script>

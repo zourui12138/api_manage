@@ -8,4 +8,4 @@
     }
 </script>
 
-<style lang="scss">@import "./apiManage";</style>
+<style lang="scss"></style>
