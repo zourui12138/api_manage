@@ -93,7 +93,11 @@
                 </div>
             </section>
         </VuePerfectScrollbar>
-        <el-dialog title="添加请求头部" width="400px" :visible.sync="headerDialog">
+        <el-dialog
+            title="添加请求头部"
+            width="400px"
+            :visible.sync="headerDialog"
+            :before-close="closeAddHeader">
             <div class="dialogContent">
                 <div class="clear">
                     <span class="fl dialogContentLabel">头部标签：</span>
@@ -141,11 +145,15 @@
                 </div>
             </div>
             <div slot="footer">
-                <el-button size="small" @click="headerDialog = false">取 消</el-button>
-                <el-button size="small" type="primary" @click="headerDialog = false">确 定</el-button>
+                <el-button size="small" @click="closeAddHeader">取 消</el-button>
+                <el-button size="small" type="primary" @click="submitAddHeader">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="添加请求参数" width="400px" :visible.sync="requestDialog">
+        <el-dialog
+            title="添加请求参数"
+            width="400px"
+            :visible.sync="requestDialog"
+            :before-close="closeAddRequest">
             <div class="dialogContent">
                 <div class="clear">
                     <span class="fl dialogContentLabel">字段名：</span>
@@ -173,11 +181,15 @@
                 </div>
             </div>
             <div slot="footer">
-                <el-button size="small" @click="requestDialog = false">取 消</el-button>
-                <el-button size="small" type="primary" @click="requestDialog = false">确 定</el-button>
+                <el-button size="small" @click="closeAddRequest">取 消</el-button>
+                <el-button size="small" type="primary" @click="submitAddRequest">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="添加返回参数" width="400px" :visible.sync="responseDialog">
+        <el-dialog
+            title="添加返回参数"
+            width="400px"
+            :visible.sync="responseDialog"
+            :before-close="closeAddResponse">
             <div class="dialogContent">
                 <div class="clear">
                     <span class="fl dialogContentLabel">字段名：</span>
@@ -205,8 +217,8 @@
                 </div>
             </div>
             <div slot="footer">
-                <el-button size="small" @click="responseDialog = false">取 消</el-button>
-                <el-button size="small" type="primary" @click="responseDialog = false">确 定</el-button>
+                <el-button size="small" @click="closeAddResponse">取 消</el-button>
+                <el-button size="small" type="primary" @click="submitAddResponse">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -325,11 +337,35 @@
             openAddHeader() {
                 this.headerDialog = true;
             },
+            closeAddHeader() {
+                this.headerDialog = false;
+                this.$message({type: 'info', message: '取消请求头部添加'});
+            },
+            submitAddHeader() {
+                this.headerDialog = false;
+                this.$message({type: 'success', message: '请求头部添加完成'});
+            },
             openAddRequest() {
                 this.requestDialog = true;
             },
+            closeAddRequest() {
+                this.requestDialog = false;
+                this.$message({type: 'info', message: '取消请求参数添加'});
+            },
+            submitAddRequest() {
+                this.requestDialog = false;
+                this.$message({type: 'success', message: '请求头部参数完成'});
+            },
             openAddResponse() {
                 this.responseDialog = true;
+            },
+            closeAddResponse() {
+                this.responseDialog = false;
+                this.$message({type: 'info', message: '取消返回参数添加'});
+            },
+            submitAddResponse() {
+                this.responseDialog = false;
+                this.$message({type: 'success', message: '返回参数添加完成'});
             },
             saveApiWarn() {
                 this.$msgbox({
@@ -341,7 +377,10 @@
                 });
             },
             backApiList() {
-                this.$router.push({path: '/apiManage/apiList'});
+                this.$router.push({
+                    path: '/apiManage/apiList',
+                    query: {uuid: this.$route.query.uuid}
+                });
             }
         }
     }
@@ -376,21 +415,6 @@
                     .basicUrl{
                         width: calc(100% - 160px);
                     }
-                }
-            }
-        }
-        .dialogContent{
-            .dialogContentLabel{
-                height: 40px;
-                line-height: 40px;
-                width: 70px;
-            }
-            .dialogContentBox{
-                height: 40px;
-                line-height: 40px;
-                width: calc(100% - 70px);
-                .dialogSelect{
-                    width: calc(100%);
                 }
             }
         }

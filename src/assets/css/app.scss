@@ -95,3 +95,19 @@ input, button {
 .underline:hover{
     text-decoration: underline;
 }
+/* .dialogContent */
+.dialogContent{
+    .dialogContentLabel{
+        height: 40px;
+        line-height: 40px;
+        width: 70px;
+    }
+    .dialogContentBox{
+        height: 40px;
+        line-height: 40px;
+        width: calc(100% - 70px);
+        .dialogSelect{
+            width: calc(100%);
+        }
+    }
+}

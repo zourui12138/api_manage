@@ -144,10 +144,19 @@
                 });
             },
             backApiList() {
-                this.$router.push({path: '/apiManage/apiList'});
+                this.$router.push({
+                    path: '/apiManage/apiList',
+                    query: {uuid: this.$route.query.uuid}
+                });
             },
             toSetApi(){
-                this.$router.push({path: '/apiManage/setApi'});
+                this.$router.push({
+                    path: '/apiManage/setApi',
+                    query: {
+                        uuid: this.$route.query.uuid,
+                        apiId: this.$route.query.apiId
+                    }
+                });
             }
         },
         beforeMount() {

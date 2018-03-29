@@ -47,6 +47,7 @@
             return{
                 apiData: [
                     {
+                        id: 1,
                         apiName: '测试接口',
                         uri: 'add/aaa',
                         creator: '刘欢',
@@ -56,51 +57,7 @@
                         time: '2018-01-23 23:59:59'
                     },
                     {
-                        apiName: '测试接口',
-                        uri: 'add/aaa',
-                        creator: '刘欢',
-                        mender: '刘欢',
-                        type: 'GET',
-                        status: '2',
-                        time: '2018-01-23 23:59:59'
-                    },
-                    {
-                        apiName: '测试接口',
-                        uri: 'add/aaa',
-                        creator: '刘欢',
-                        mender: '刘欢',
-                        type: 'POST',
-                        status: '3',
-                        time: '2018-01-23 23:59:59'
-                    },
-                    {
-                        apiName: '测试接口',
-                        uri: 'add/aaa',
-                        creator: '刘欢',
-                        mender: '刘欢',
-                        type: 'GET',
-                        status: '1',
-                        time: '2018-01-23 23:59:59'
-                    },
-                    {
-                        apiName: '测试接口',
-                        uri: 'add/aaa',
-                        creator: '刘欢',
-                        mender: '刘欢',
-                        type: 'POST',
-                        status: '2',
-                        time: '2018-01-23 23:59:59'
-                    },
-                    {
-                        apiName: '测试接口',
-                        uri: 'add/aaa',
-                        creator: '刘欢',
-                        mender: '刘欢',
-                        type: 'GET',
-                        status: '3',
-                        time: '2018-01-23 23:59:59'
-                    },
-                    {
+                        id: 2,
                         apiName: '测试接口',
                         uri: 'add/aaa',
                         creator: '刘欢',
@@ -110,12 +67,33 @@
                         time: '2018-01-23 23:59:59'
                     },
                     {
+                        id: 3,
                         apiName: '测试接口',
                         uri: 'add/aaa',
                         creator: '刘欢',
                         mender: '刘欢',
-                        type: 'GET',
-                        status: '2',
+                        type: 'POST',
+                        status: '1',
+                        time: '2018-01-23 23:59:59'
+                    },
+                    {
+                        id: 4,
+                        apiName: '测试接口',
+                        uri: 'add/aaa',
+                        creator: '刘欢',
+                        mender: '刘欢',
+                        type: 'POST',
+                        status: '1',
+                        time: '2018-01-23 23:59:59'
+                    },
+                    {
+                        id: 5,
+                        apiName: '测试接口',
+                        uri: 'add/aaa',
+                        creator: '刘欢',
+                        mender: '刘欢',
+                        type: 'POST',
+                        status: '1',
                         time: '2018-01-23 23:59:59'
                     }
                 ],
@@ -176,15 +154,28 @@
                 });
             },
             toAddApi() {
-                this.$router.push({path: '/apiManage/addApi'});
+                this.$router.push({
+                    path: '/apiManage/addApi',
+                    query: {uuid: this.$route.query.uuid}
+                });
             },
-            toSetApi(row) {
-                console.log(row);
-                this.$router.push({path: '/apiManage/setApi'});
+            toSetApi(scope) {
+                this.$router.push({
+                    path: '/apiManage/setApi',
+                    query: {
+                        uuid: this.$route.query.uuid,
+                        apiId: scope.row.id
+                    }
+                });
             },
-            toApiDetail(row) {
-                console.log(row);
-                this.$router.push({path: '/apiManage/apiDetail'});
+            toApiDetail(scope) {
+                this.$router.push({
+                    path: '/apiManage/apiDetail',
+                    query: {
+                        uuid: this.$route.query.uuid,
+                        apiId: scope.id
+                    }
+                });
             }
         },
         beforeMount() {
